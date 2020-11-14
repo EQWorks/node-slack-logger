@@ -29,6 +29,7 @@ module.exports = {
         }
       ],
       "no-restricted-syntax": "off",
+      "no-constant-condition": "off",
       "no-underscore-dangle": "off",
       "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
       "import/no-extraneous-dependencies": ["error", {"devDependencies": ['**/*.test.js', '**/*.spec.js', '**/setup-jest.js']}],
@@ -40,7 +41,6 @@ module.exports = {
       "import/prefer-default-export": "off",
       "import/no-named-as-default": "off",
       "import/no-named-as-default-member": "off",
-      "camelcase": "on",
       "prefer-destructuring": ["error", {
         "VariableDeclarator": {
           "array": false,

@@ -1,10 +1,10 @@
 {
   "name": "@eqworks/node-slack-logger",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Log events to slack channels",
   "repository": "github:EQWorks/node-slack-logger",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint ./lib"
   },
   "files": [
     "index.js",
