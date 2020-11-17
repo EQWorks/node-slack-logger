@@ -1,18 +1,30 @@
 {
   "name": "@eqworks/node-slack-logger",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Log events to slack channels",
   "repository": "github:EQWorks/node-slack-logger",
+  "homepage": "https://github.com/EQWorks/node-slack-logger",
+  "author": {
+    "name": "EQ Works",
+    "email": "dev@eqworks.com",
+    "url": "https://eqworks.com/"
+  },
   "scripts": {
     "lint": "eslint ./lib"
   },
-  "files": [
-    "index.js",
-    "README.md",
-    "LICENSE"
+  "keywords": [
+    "slack",
+    "logger",
+    "node",
+    "error",
+    "exception",
+    "log",
+    "logging"
   ],
   "main": "index.js",
   "license": "MIT",
+  "types": "index.d.ts",
+  "typings": "index.d.ts",
   "dependencies": {
     "axios": "^0.21.0"
   },

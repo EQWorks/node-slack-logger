@@ -1,4 +1,4 @@
-module.exports = {
+{
   "extends": "airbnb-base",
   "rules": {
       "no-console": "off",
@@ -55,4 +55,4 @@ module.exports = {
       }],
       "consistent-return": "off"
   }
-};
+}
