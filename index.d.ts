@@ -1,8 +1,8 @@
 
-export type Levels = 0 | 1 | 2 | 3 |4;
+export type Levels = 1 | 2 | 3 | 4 | 5;
 
 export const enum levels {
-  DEBUG = 0,
+  DEBUG = 1,
   INFO,
   WARNING,
   ERROR,
@@ -14,6 +14,7 @@ export type LevelNames = 'DEBUG' | 'INFO' | 'WARNING' | 'ERROR' | 'CRITICAL';
 export interface LoggerOptions {
   slackHook: string;
   appName?: string;
+  channel?: string;
   minLevel?: Levels | LevelNames;
   colors?: Record<Levels, string>;
 }
@@ -55,5 +56,5 @@ export interface Logger {
   ): Promise<void>;
 }
 
-function getLogger(idOrOptions: string | number, options: LoggerOptions): Logger;
+export function getLogger(idOrOptions: string | number, options: LoggerOptions): Logger;
 export function getLogger(idOrOptions?: string | number | LoggerOptions): Logger;

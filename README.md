@@ -1,8 +1,11 @@
 # Node Slack Loger
 
+[![NPM version](https://img.shields.io/npm/v/@eqworks/node-slack-logger.svg)](https://www.npmjs.com/package/@eqworks/node-slack-logger)
+
 Node Slack Logger is a utility to log messages or errors to a Slack channel. It is built around a simple function, `getLogger`, which can be imported in any module in order to access the desired logger, waiving the need to pass around logger objects.
 
 ## Installation
+
 ```
 yarn add @eqworks/node-slack-logger
 OR
@@ -10,13 +13,21 @@ npm install @eqworks/node-slack-logger
 ```
 
 ## Interface
+
 1. function `getLogger`
 - `getLogger(id, options)` - Instantiates/updates logger at `id` with `options` and returns said logger.
 - `getLogger(options)` - Instantiates/updates the default logger with `options` and returns said logger.
 - `getLogger(id)` - Returns logger at `id` or throws an error if the logger was not previously instantiated.
 - `getLogger()` - Returns the default logger or throws an error if the logger was not previously instantiated.
 
-2. `Logger` instance
+2. Logger options
+- `slackHook` - String, _e.g. https://hooks.slack.com/..._
+- `appName` - String, optional, defaults to `My App`
+- `channel` - String, optional
+- `minLevel` - Number | String, optional, defaults to `3` (WARNING) - Minimum severity which must be achieved for an event to be logged
+- `colors`: - Object, optional - Map of log levels (number) to colours (string)
+
+3. `Logger` instance
 - `setOptions(options)` - Updates the logger's config
 - `log(level, error, context?)` - Logs an error to Slack at the given severity level.
 - `log(level, message, context?)` - Logs a message to Slack at the given severity level.
@@ -27,7 +38,13 @@ npm install @eqworks/node-slack-logger
 - `error(error | message | options, context?)` - Logs with level `ERROR`
 - `critical(error | message | options, context?)` - Logs with level `CRITICAL`
 
+4. Log event options
+- `message` - String
+- `stack` - String, optional - Error stack
+- `context` - Object, optional - Context object, _e.g. `{ userName: 'paul1234' }`_
+
 ## Usage
+
 ```
 const { getLogger, levels } = require('@eqworks/node-slack-logger')
 
@@ -71,4 +88,5 @@ function authentication(user, product) {
 ```
 
 ## Dependencies
+
 - Axios

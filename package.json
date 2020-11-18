@@ -1,6 +1,6 @@
 {
   "name": "@eqworks/node-slack-logger",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Log events to slack channels",
   "repository": "github:EQWorks/node-slack-logger",
   "homepage": "https://github.com/EQWorks/node-slack-logger",
