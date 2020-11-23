@@ -15,20 +15,20 @@ npm install @eqworks/node-slack-logger
 ## Interface
 
 1. function `getLogger`
-- `getLogger(id, options)` - Instantiates/updates logger at `id` with `options` and returns said logger.
-- `getLogger(options)` - Instantiates/updates the default logger with `options` and returns said logger.
+- `getLogger(id, config)` - Instantiates/updates logger at `id` with `config` and returns said logger.
+- `getLogger(config)` - Instantiates/updates the default logger with `config` and returns said logger.
 - `getLogger(id)` - Returns logger at `id` or throws an error if the logger was not previously instantiated.
 - `getLogger()` - Returns the default logger or throws an error if the logger was not previously instantiated.
 
-2. Logger options
-- `slackHook` - String, _e.g. https://hooks.slack.com/..._
+2. Logger config
+- `send` - Function - Callback to invoke in order to post to the Slack API
+- `format` - Number | string | function, optional, defaults to `1` (SLACK) - API payload formatter
 - `appName` - String, optional, defaults to `My App`
-- `channel` - String, optional
-- `minLevel` - Number | String, optional, defaults to `3` (WARNING) - Minimum severity which must be achieved for an event to be logged
+- `minLevel` - Number | string, optional, defaults to `3` (WARNING) - Minimum severity which must be achieved for an event to be logged
 - `colors`: - Object, optional - Map of log levels (number) to colours (string)
 
 3. `Logger` instance
-- `setOptions(options)` - Updates the logger's config
+- `setConfig(config)` - Updates the logger's config
 - `log(level, error, context?)` - Logs an error to Slack at the given severity level.
 - `log(level, message, context?)` - Logs a message to Slack at the given severity level.
 - `log(level, options, context?)` - Logs a message with options to Slack at the given severity level.
@@ -46,13 +46,29 @@ npm install @eqworks/node-slack-logger
 ## Usage
 
 ```
-const { getLogger, levels } = require('@eqworks/node-slack-logger')
+const { getLogger, logLevels } = require('@eqworks/node-slack-logger')
+
+// api - using axios
+const axios = require('axios')
+const send = (body) => axios.post(
+  'https://hooks.slack.com/...',
+  body,
+  {
+    timeout: 5000, // 5 seconds
+    maxRedirects: 0,
+  },
+)
+
+// api - using Slack sdk
+const { IncomingWebhook } = require('@slack/webhook')
+const webhook = new IncomingWebhook('https://hooks.slack.com/...')
+const send = webhook.send.bind(webhook)
 
 // instantiate default logger
 const logger = getLogger({
-  slackHook: 'https://hooks.slack.com/...',
+  send,
   appName: 'My Fantastically Magical App',
-  minLevel: levels.WARNING,
+  minLevel: logLevels.WARNING,
 })
 
 // Express.js middleware
@@ -65,15 +81,15 @@ someJob.then(() => getLogger().info('Job ran successfully')).catch((err) => getL
 
 // Using multiple loggers
 getLogger('abc', {
-  slackHook: 'https://hooks.slack.com/...abc-hook...',
+  send: ...,
   appName: 'ABC not the Alphabet Song',
-  minLevel: levels.INFO,
+  minLevel: logLevels.INFO,
 })
 
 getLogger('xyz', {
-  slackHook: 'https://hooks.slack.com/...xyz-hook...',
+  send: ...,
   appName: 'XYZ more than a TLD',
-  minLevel: levels.INFO,
+  minLevel: logLevels.INFO,
 })
 
 function authentication(user, product) {
@@ -86,7 +102,3 @@ function authentication(user, product) {
 }
 
 ```
-
-## Dependencies
-
-- Axios
