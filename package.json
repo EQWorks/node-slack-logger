@@ -1,6 +1,6 @@
 {
   "name": "@eqworks/node-slack-logger",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Log events to slack channels",
   "repository": "github:EQWorks/node-slack-logger",
   "homepage": "https://github.com/EQWorks/node-slack-logger",
@@ -25,9 +25,7 @@
   "license": "MIT",
   "types": "index.d.ts",
   "typings": "index.d.ts",
-  "dependencies": {
-    "axios": "^0.21.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^7.13.0",
     "eslint-config-airbnb": "^18.2.1",

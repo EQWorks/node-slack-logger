@@ -1,21 +1,49 @@
 
-export type Levels = 0 | 1 | 2 | 3 |4;
+export type LogLevels = 1 | 2 | 3 | 4 | 5;
 
-export const enum levels {
-  DEBUG = 0,
+export const enum logLevels {
+  DEBUG = 1,
   INFO,
   WARNING,
   ERROR,
   CRITICAL,
 }
 
-export type LevelNames = 'DEBUG' | 'INFO' | 'WARNING' | 'ERROR' | 'CRITICAL';
+export type LogLevelNames = 'DEBUG' | 'INFO' | 'WARNING' | 'ERROR' | 'CRITICAL';
 
-export interface LoggerOptions {
-  slackHook: string;
+export interface LogEventTrail {
+  scope?: string;
+  file?: string;
+  line?: number;
+  column?: number;
+}
+
+export interface LogEventValues {
+  appName: string;
+  level: LogLevels;
+  levelName: string;
+  color: string;
+  name?: string;
+  message: string;
+  stack?: string;
+  trail: LogEventTrail;
+  context: LogEventContext;
+}
+
+export type LogFormats = 1
+
+export const enum logFormats {
+  SLACK = 1,
+}
+
+export type LogFormatNames = 'SLACK'
+
+export interface LoggerConfig {
+  send: (body: string | Object) => Promise<any>;
+  format?: LogFormats | LogFormatNames | ((logValues: LogEventValues) => string | Object);
   appName?: string;
-  minLevel?: Levels | LevelNames;
-  colors?: Record<Levels, string>;
+  minLevel?: LogLevels | LogLevelNames;
+  colors?: Record<LogLevels, string>;
 }
 
 export type LogEventContext = Record<string | number, any>
@@ -27,9 +55,9 @@ export interface LogEventOptions {
 }
 
 export interface Logger {
-  setOptions(options: LoggerOptions): void;
+  setConfig(config: LoggerConfig): void;
   log(
-    level: Levels | LevelNames,
+    level: LogLevels | LogLevelNames,
     errorOrMessageOrOptions: Error | string | LogEventOptions,
     context?: LogEventContext,
   ): Promise<void>;
@@ -55,5 +83,5 @@ export interface Logger {
   ): Promise<void>;
 }
 
-function getLogger(idOrOptions: string | number, options: LoggerOptions): Logger;
-export function getLogger(idOrOptions?: string | number | LoggerOptions): Logger;
+export function getLogger(idOrConfig: string | number, config: LoggerConfig): Logger;
+export function getLogger(idOrConfig?: string | number | LoggerConfig): Logger;
